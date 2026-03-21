@@ -23,8 +23,8 @@ interface BottomNavProps {
 
 export function BottomNav({ activeTab = "Home" }: BottomNavProps) {
   return (
-    <nav className="fixed bottom-[88px] left-0 right-0 z-40 mx-auto max-w-md border-t border-border bg-background/95 backdrop-blur-md">
-      <div className="flex items-center justify-around px-2 py-2">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 mx-auto max-w-md border-t border-border bg-background/95 px-2 pb-6 pt-2 backdrop-blur-md">
+      <div className="flex items-center justify-around">
         {navItems.map((item) => {
           const isActive = item.label === activeTab
           return (

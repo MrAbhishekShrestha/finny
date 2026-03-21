@@ -4,27 +4,16 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Sparkles, Plane, Gift, Home } from "lucide-react"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import goalsData from "@/data/goals.json"
+import { useStore } from "@/store/useStore"
 
-interface SavingGoal {
-  id: string
-  name: string
-  target: number
-  current: number
-  deadline: string
-  icon: "plane" | "gift" | "home"
-  aiManaged: boolean
-}
-
-const goals = goalsData as SavingGoal[]
-
-const iconMap = {
+const iconMap: Record<string, React.ElementType> = {
   plane: Plane,
   gift: Gift,
   home: Home,
 }
 
 export function SavingsGoals() {
+  const goals = useStore(state => state.goals)
   return (
     <div className="px-5">
       <div className="mb-4 flex items-center justify-between">

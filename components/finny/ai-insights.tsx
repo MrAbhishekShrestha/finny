@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Sparkles, TrendingUp, AlertTriangle, ChevronRight, Zap } from "lucide-react"
 import Link from "next/link"
-
-import insightsData from "@/data/insights.json"
+import { useStore } from "@/store/useStore"
 
 interface Forecast {
   id: string
@@ -18,9 +17,8 @@ interface Forecast {
   message: string
 }
 
-const forecasts = insightsData.categoryForecasts as Forecast[]
-
 export function AIInsights() {
+  const forecasts = useStore(state => state.insights.categoryForecasts) as Forecast[]
   const hasWarnings = forecasts.some(f => f.riskLevel === "overspend" || f.riskLevel === "warning")
 
   return (

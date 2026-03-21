@@ -21,7 +21,7 @@ export function ChatBar() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 mx-auto max-w-md border-t border-border bg-background/80 px-4 pb-6 pt-3 backdrop-blur-xl">
+    <div className="fixed bottom-[76px] left-0 right-0 z-40 mx-auto max-w-md px-4 pb-4 pt-10 bg-gradient-to-t from-background via-background/95 to-transparent">
       <form
         onSubmit={handleSubmit}
         className={`flex items-center gap-2 rounded-2xl bg-card p-2 shadow-lg transition-all duration-200 ${

@@ -1,22 +1,30 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ArrowLeft, Send, Sparkles } from "lucide-react"
 
 import ReactMarkdown from "react-markdown"
+import { useStore } from "@/store/useStore"
+import { TransferWidget, CreateGoalWidget } from "@/components/finny/chat-widgets"
 
 interface Message {
-  role: "user" | "model"
-  content: string
+  role: "user" | "model" | "widget"
+  content?: string
+  name?: string
+  args?: any
 }
 
-export default function ChatPage() {
+function Chat() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const initialQuery = searchParams.get("q")
+  
+  const user = useStore(state => state.user)
+  const goals = useStore(state => state.goals)
+  const insights = useStore(state => state.insights)
   
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState("")
@@ -50,19 +58,32 @@ export default function ChatPage() {
 
     try {
       // Map to Gemini format: { role: "user", parts: [{ text: "..." }] }
-      const formattedMessages = newMessages.map(m => ({
-        role: m.role,
-        parts: [{ text: m.content }]
-      }))
+      const formattedMessages = newMessages.map(m => {
+        if (m.role === 'widget') {
+          return {
+            role: 'model',
+            parts: [{ text: `[System Note: I displayed a ${m.name} widget to the user with these details: ${JSON.stringify(m.args)}]` }]
+          }
+        }
+        return {
+          role: m.role,
+          parts: [{ text: m.content || "" }]
+        }
+      })
 
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: formattedMessages })
+        body: JSON.stringify({ 
+          messages: formattedMessages,
+          context: { user, goals, insights }
+        })
       })
       
       const data = await res.json()
-      if (data.text) {
+      if (data.functionCall) {
+        setMessages([...newMessages, { role: "widget", name: data.functionCall.name, args: data.functionCall.args }])
+      } else if (data.text) {
         setMessages([...newMessages, { role: "model", content: data.text }])
       }
     } catch (error) {
@@ -108,15 +129,28 @@ export default function ChatPage() {
               </div>
             )}
             
-            <div className={`rounded-xl px-4 py-3 max-w-[85%] ${
-              m.role === 'user' 
-                ? 'bg-primary text-primary-foreground rounded-br-sm shadow-sm' 
-                : 'bg-muted text-foreground rounded-tl-sm shadow-sm'
-            }`}>
-              <div className="text-sm leading-relaxed whitespace-pre-wrap break-words [&>p]:mb-2 [&>p:last-child]:mb-0 [&>ul]:mb-2 [&>ul]:ml-5 [&>ul]:list-disc [&>ol]:mb-2 [&>ol]:ml-5 [&>ol]:list-decimal [&>strong]:font-semibold">
-                <ReactMarkdown>{m.content}</ReactMarkdown>
+            {m.role === 'widget' && (
+              <div className="w-full">
+                {m.name === 'proposeTransfer' && (
+                  <TransferWidget args={m.args} onComplete={sendMessage} />
+                )}
+                {m.name === 'proposeGoal' && (
+                  <CreateGoalWidget args={m.args} onComplete={sendMessage} />
+                )}
               </div>
-            </div>
+            )}
+
+            {m.role !== 'widget' && (
+              <div className={`rounded-xl px-4 py-3 max-w-[85%] ${
+                m.role === 'user' 
+                  ? 'bg-primary text-primary-foreground rounded-br-sm shadow-sm' 
+                  : 'bg-muted text-foreground rounded-tl-sm shadow-sm'
+              }`}>
+                <div className="text-sm leading-relaxed whitespace-pre-wrap break-words [&>p]:mb-2 [&>p:last-child]:mb-0 [&>ul]:mb-2 [&>ul]:ml-5 [&>ul]:list-disc [&>ol]:mb-2 [&>ol]:ml-5 [&>ol]:list-decimal [&>strong]:font-semibold">
+                  <ReactMarkdown>{m.content || ""}</ReactMarkdown>
+                </div>
+              </div>
+            )}
           </div>
         ))}
         {isLoading && (
@@ -156,5 +190,13 @@ export default function ChatPage() {
         </form>
       </div>
     </div>
+  )
+}
+
+export default function ChatPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-screen bg-background text-muted-foreground p-4">Loading chat...</div>}>
+      <Chat />
+    </Suspense>
   )
 }
