@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Sparkles, Plane, Gift, Home } from "lucide-react"
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
+import goalsData from "@/data/goals.json"
 
 interface SavingGoal {
   id: string
@@ -15,35 +16,7 @@ interface SavingGoal {
   aiManaged: boolean
 }
 
-const goals: SavingGoal[] = [
-  {
-    id: "1",
-    name: "Paris Trip",
-    target: 500,
-    current: 100,
-    deadline: "June 2026",
-    icon: "plane",
-    aiManaged: true,
-  },
-  {
-    id: "2",
-    name: "Birthday Fund",
-    target: 200,
-    current: 150,
-    deadline: "Aug 2026",
-    icon: "gift",
-    aiManaged: false,
-  },
-  {
-    id: "3",
-    name: "Emergency Fund",
-    target: 2000,
-    current: 850,
-    deadline: "Dec 2026",
-    icon: "home",
-    aiManaged: true,
-  },
-]
+const goals = goalsData as SavingGoal[]
 
 const iconMap = {
   plane: Plane,

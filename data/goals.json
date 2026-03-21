@@ -1,0 +1,32 @@
+[
+  {
+    "id": "g1",
+    "name": "Paris Trip",
+    "target": 500.00,
+    "current": 100.00,
+    "deadline": "June 2026",
+    "icon": "plane",
+    "aiManaged": true,
+    "aiNudge": "You're doing great! Keep saving £40/month to hit this goal."
+  },
+  {
+    "id": "g2",
+    "name": "Birthday Fund",
+    "target": 200.00,
+    "current": 150.00,
+    "deadline": "Aug 2026",
+    "icon": "gift",
+    "aiManaged": false,
+    "aiNudge": null
+  },
+  {
+    "id": "g3",
+    "name": "Emergency Fund",
+    "target": 2000.00,
+    "current": 850.00,
+    "deadline": "Dec 2026",
+    "icon": "home",
+    "aiManaged": true,
+    "aiNudge": "We diverted £50 from unused subscriptions here."
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "id": "u123",
+  "firstName": "Alex",
+  "lastName": "Smith",
+  "accounts": [
+    {
+      "id": "acc001",
+      "type": "CURRENT",
+      "balance": 1200.50,
+      "currency": "GBP"
+    },
+    {
+      "id": "acc002",
+      "type": "SAVINGS",
+      "balance": 4500.00,
+      "currency": "GBP"
+    }
+  ]
+}

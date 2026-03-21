@@ -1,0 +1,18 @@
+[
+  {
+    "id": "tx101",
+    "date": "2026-03-20T14:30:00Z",
+    "merchant": "Tesco",
+    "amount": -45.20,
+    "category": "Groceries",
+    "isSubscription": false
+  },
+  {
+    "id": "tx102",
+    "date": "2026-03-15T09:00:00Z",
+    "merchant": "Netflix",
+    "amount": -10.99,
+    "category": "Entertainment",
+    "isSubscription": true
+  }
+]

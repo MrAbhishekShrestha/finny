@@ -6,36 +6,19 @@ import { Badge } from "@/components/ui/badge"
 import { Sparkles, TrendingUp, AlertTriangle, ChevronRight, Zap } from "lucide-react"
 import Link from "next/link"
 
+import insightsData from "@/data/insights.json"
+
 interface Forecast {
   id: string
   category: string
-  icon: React.ReactNode
+  icon: string
   predictedAmount: number
   budgetLimit: number
   riskLevel: "on-track" | "warning" | "overspend"
   message: string
 }
 
-const forecasts: Forecast[] = [
-  {
-    id: "1",
-    category: "Dining Out",
-    icon: <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-orange-500/15 text-sm">🍽️</div>,
-    predictedAmount: 280,
-    budgetLimit: 200,
-    riskLevel: "overspend",
-    message: "Likely to exceed budget by £80",
-  },
-  {
-    id: "2",
-    category: "Groceries",
-    icon: <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/15 text-sm">🛒</div>,
-    predictedAmount: 320,
-    budgetLimit: 350,
-    riskLevel: "on-track",
-    message: "On track to stay under budget",
-  },
-]
+const forecasts = insightsData.categoryForecasts as Forecast[]
 
 export function AIInsights() {
   const hasWarnings = forecasts.some(f => f.riskLevel === "overspend" || f.riskLevel === "warning")
@@ -96,7 +79,13 @@ export function AIInsights() {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
-                      {forecast.icon}
+                      <div className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm ${
+                        forecast.riskLevel === 'overspend' || forecast.riskLevel === 'warning' 
+                          ? 'bg-orange-500/15' 
+                          : 'bg-emerald-500/15'
+                      }`}>
+                        {forecast.icon}
+                      </div>
                       <div>
                         <p className="font-medium text-foreground">{forecast.category}</p>
                         <p className="text-xs text-muted-foreground">{forecast.message}</p>

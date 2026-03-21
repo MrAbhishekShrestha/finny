@@ -1,0 +1,46 @@
+{
+  "monthlyForecast": {
+    "predictedSpend": 1850.00,
+    "budget": 1700.00,
+    "status": "OVER_BUDGET"
+  },
+  "categoryForecasts": [
+    {
+      "id": "1",
+      "category": "Dining Out",
+      "icon": "🍽️",
+      "predictedAmount": 280,
+      "budgetLimit": 200,
+      "riskLevel": "overspend",
+      "message": "Likely to exceed budget by £80"
+    },
+    {
+      "id": "2",
+      "category": "Groceries",
+      "icon": "🛒",
+      "predictedAmount": 320,
+      "budgetLimit": 350,
+      "riskLevel": "on-track",
+      "message": "On track to stay under budget"
+    }
+  ],
+  "identifiedSubscriptions": [
+    {
+      "merchant": "Gym Membership",
+      "monthlyCost": 45.00,
+      "lastUsed": "2026-01-10T00:00:00Z",
+      "aiFlag": "LOW_USAGE",
+      "suggestion": "You haven't visited the gym in 2 months. Canceling could save you £45/mo towards your Paris Trip."
+    }
+  ],
+  "smartActions": [
+    {
+      "id": "sa1",
+      "type": "MOVE_TO_SAVINGS",
+      "title": "Safe to save",
+      "description": "You have £50 extra this week. Move to savings?",
+      "suggestedAmount": 50.00,
+      "targetGoalId": "g1"
+    }
+  ]
+}
