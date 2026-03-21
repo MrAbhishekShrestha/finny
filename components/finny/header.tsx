@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Bell, Search } from "lucide-react"
 
@@ -23,25 +24,32 @@ export function Header({ userName, balance }: HeaderProps) {
       
       <div className="relative">
         {/* Top row */}
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-8 flex items-center justify-between">
+          <div className="flex items-center">
+            <div className="flex h-10 items-center overflow-hidden rounded-lg bg-white px-2 py-1 shadow-sm">
+              <Image 
+                src="/logo.jpeg" 
+                alt="Logo" 
+                width={100} 
+                height={32} 
+                className="h-full w-auto object-contain"
+                priority
+              />
+            </div>
+          </div>
           <div className="flex items-center gap-3">
-            <Avatar className="h-11 w-11 ring-2 ring-white/20">
+            <div className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
+              Personal
+            </div>
+            <button className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20">
+              <Bell className="h-5 w-5" />
+            </button>
+            <Avatar className="h-10 w-10 ring-2 ring-white/20">
               <AvatarImage src="/avatar.jpg" alt={userName} />
               <AvatarFallback className="bg-white/20 text-sm font-medium text-white">
                 {userName.charAt(0)}
               </AvatarFallback>
             </Avatar>
-            <div className="rounded-full bg-white/15 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
-              Personal
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20">
-              <Bell className="h-5 w-5" />
-            </button>
-            <button className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20">
-              <Search className="h-5 w-5" />
-            </button>
           </div>
         </div>
 
