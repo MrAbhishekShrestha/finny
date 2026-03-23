@@ -7,25 +7,16 @@ const _geist = Geist({ subsets: ["latin"] });
 const _geistMono = Geist_Mono({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Finny AI Companion | NatWest',
-  description: 'Your intelligent banking assistant - manage savings, track subscriptions, and reach your financial goals',
-  generator: 'v0.app',
+  title: 'Finny AI',
+  description: 'Your intelligent, proactive banking companion powered by Google Gemini. Built for the NatWest Group x Google Cloud Hackathon at the University of Edinburgh',
+  openGraph: {
+    title: 'Finny AI',
+    description: 'Your intelligent, proactive banking companion powered by Google Gemini. Built for the NatWest Group x Google Cloud Hackathon at the University of Edinburgh',
+    images: ['/logo.jpeg'],
+  },
   icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
+    icon: '/logo.jpeg',
+    apple: '/logo.jpeg',
   },
 }
 

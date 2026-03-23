@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Finny AI — Your Intelligent Banking Companion 🏦✨
 
-## Getting Started
+**Built for the NatWest Group x Google Cloud Hackathon at the University of Edinburgh**
 
-First, run the development server:
+![Finny AI Hackathon Banner](/public/logo.jpeg)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Overview
+**Finny AI** is a proactive, AI-powered conversational banking companion designed to integrate seamlessly into the NatWest mobile app. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+While traditional banking apps are **reactive** (showing you what you've already spent), Finny is **proactive**—analyzing your historical data, forecasting your budget, and actively nudging you towards achieving your personal financial goals.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Key Features
+- **Proactive AI Insights:** Leverages the Gemini API to analyze transaction history, warning users *before* they overspend on categories like Dining Out or Entertainment.
+- **Generative UI (Interactive Chat):** Powered by Gemini Function Calling, Finny doesn't just talk—it takes action. It dynamically renders interactive React widgets mid-conversation, allowing users to move money or create new Savings Pots instantly without leaving the chat interface.
+- **Goal Tracking & Forecasting:** Users can create tailored savings goals. Finny manages target dates, evaluates progress, and issues conversational nudges.
+- **Smart Subscription Management:** Automatically identifies recurring transactions and suggests diverting funds from unused or forgotten subscriptions directly into high-yield savings pots.
+- **Strict Financial Guardrails:** Architected with comprehensive system instructions to politely refuse formal investment advice and stay strictly on-topic regarding the user's personal banking.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Technology Stack
+- **Frontend Framework:** [Next.js 14+](https://nextjs.org/) (App Router)
+- **Styling & Components:** [Tailwind CSS](https://tailwindcss.com/), [Shadcn UI](https://ui.shadcn.com/), and `react-markdown`
+- **State Management:** [Zustand](https://zustand-demo.pmnd.rs/) for blazing-fast, instantaneous state synchronization between the chat widgets and the main dashboard.
+- **AI Engine:** [Google Gemini API](https://ai.google.dev/) (`@google/genai` SDK) utilizing Advanced System Instructions and Tool/Function Calling.
+- **Deployment:** Containerized via Docker and deployed serverlessly on **Google Cloud Run**.
 
-## Learn More
+## 💻 Running Locally
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository and install dependencies:**
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Set up Environment Variables:**
+   Create a `.env.local` file in the root directory and add your Gemini API Key:
+   ```env
+   GEMINI_API_KEY=your_google_gemini_api_key_here
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Run the Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the Finny dashboard.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🏗️ Project Architecture
+- **`/app/api/chat/route.ts`**: The secure Node.js backend proxy that contextualizes the user's live financial data and defines the `proposeTransfer` and `proposeGoal` tools for Gemini.
+- **`/store/useStore.ts`**: The Zustand global state manager that seeds mock banking data and mutates balances securely across the platform.
+- **`/components/finny/chat-widgets.tsx`**: The interactive "Generative UI" components that seamlessly blend chat conversations with actionable banking workflows.
