@@ -11,10 +11,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { icon: <Home className="h-5 w-5" />, label: "Home", href: "/" },
-  { icon: <MessageCircle className="h-5 w-5" />, label: "Help", href: "/" },
+  { icon: <MessageCircle className="h-5 w-5" />, label: "Help", href: "/chat" },
   { icon: <ArrowLeftRight className="h-5 w-5" />, label: "Payments", href: "/" },
   { icon: <BarChart3 className="h-5 w-5" />, label: "Insights", href: "/insights" },
-  { icon: <FileText className="h-5 w-5" />, label: "Apply", href: "/" },
 ]
 
 interface BottomNavProps {

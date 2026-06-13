@@ -33,22 +33,32 @@ export const useStore = create<AppState>((set) => ({
   addGoal: (goal) => set((state) => ({ goals: [...state.goals, goal] })),
   
   moveMoney: (amount, fromType, toType) => set((state) => {
-    let toAccountType = toType;
+    const numAmount = Number(amount);
+    let toAccountType = toType.toUpperCase() === 'CURRENT' ? 'CURRENT' : 'SAVINGS';
     let goalFound = false;
+
+    const cleanToType = toType.toLowerCase().trim();
 
     // Check if the target is actually a savings goal
     const newGoals = state.goals.map(goal => {
-      if (goal.name.toLowerCase() === toType.toLowerCase() || goal.id === toType) {
+      const cleanGoalName = goal.name.toLowerCase();
+      const isMatch = 
+        cleanGoalName === cleanToType || 
+        goal.id.toLowerCase() === cleanToType ||
+        cleanToType.includes(cleanGoalName) ||
+        cleanGoalName.includes(cleanToType);
+
+      if (isMatch) {
         goalFound = true;
         toAccountType = 'SAVINGS'; // Route the underlying funds to the SAVINGS vault
-        return { ...goal, current: goal.current + amount };
+        return { ...goal, current: Number(goal.current) + numAmount };
       }
       return goal;
     });
 
     const newAccounts = state.user.accounts.map(acc => {
-      if (acc.type === fromType) return { ...acc, balance: acc.balance - amount }
-      if (acc.type === toAccountType) return { ...acc, balance: acc.balance + amount }
+      if (acc.type === fromType) return { ...acc, balance: acc.balance - numAmount }
+      if (acc.type === toAccountType) return { ...acc, balance: acc.balance + numAmount }
       return acc
     })
     
@@ -56,7 +66,7 @@ export const useStore = create<AppState>((set) => ({
       id: `tx${Date.now()}`,
       date: new Date().toISOString(),
       merchant: goalFound ? `Contribution to ${toType}` : `Transfer to ${toType}`,
-      amount: -amount,
+      amount: -numAmount,
       category: "Transfer",
       isSubscription: false
     }

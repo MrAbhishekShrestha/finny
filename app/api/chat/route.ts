@@ -47,7 +47,7 @@ ${insights?.smartActions.map((a: any) => `  - ${a.title}: ${a.description}`).joi
             properties: {
               amount: { type: "NUMBER", description: "The amount to transfer" },
               fromAccount: { type: "STRING", description: "Account type to transfer from (e.g. CURRENT)" },
-              toAccount: { type: "STRING", description: "Account type to transfer to (e.g. SAVINGS)" },
+              toAccount: { type: "STRING", description: "Account type to transfer to (e.g. SAVINGS) or the name/ID of a savings goal" },
               reason: { type: "STRING", description: "Reason for the transfer to display to the user" }
             },
             required: ["amount", "fromAccount", "toAccount", "reason"]
@@ -69,7 +69,7 @@ ${insights?.smartActions.map((a: any) => `  - ${a.title}: ${a.description}`).joi
     }];
 
     const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemini-3.5-flash',
         contents: messages,
         config: {
           systemInstruction: systemInstruction,
